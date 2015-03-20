@@ -22,6 +22,7 @@ class nslcd (
     $tls_reqcert = 'allow',
     $scope       = 'sub',
     $map         = 'passwd uid',
+    $group       = 'nslcd',
 ) {
 
   # install package depending on OS
@@ -34,10 +35,15 @@ class nslcd (
   if $use_ldap != false {
     package { $packagename: ensure => present }
 
+    # create group
+    group { $group:
+        ensure => "present",
+    }
+
     file { '/etc/nslcd.conf':
       ensure => present,
       owner  => 'root',
-      group  => 'nslcd',
+      group  => $group,
       mode   => '0640',
       content => template('nslcd/nslcd.conf.erb'),
     }
