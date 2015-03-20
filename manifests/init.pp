@@ -62,17 +62,13 @@ class nslcd (
       subscribe  =>  File['/etc/nslcd.conf'],
     }
   } else {
-    if defined(Service['nslcd']) {
-      service { 'nslcd':
-        ensure => stopped,
-        enable => false,
-      }
+    service { 'nslcd':
+      ensure => stopped,
+      enable => false,
     }
-    if defined(Service['nscd']) {
-      service { 'nscd':
-        ensure => stopped,
-        enable => false,
-      }
+    service { 'nscd':
+      ensure => stopped,
+      enable => false,
     }
     package { $packagename: ensure => absent }
   }
