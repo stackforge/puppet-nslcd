@@ -68,6 +68,12 @@ class nslcd (
         enable => false,
       }
     }
+    if defined(Service['nscd']) {
+      service { 'nscd':
+        ensure => stopped,
+        enable => false,
+      }
+    }
     package { $packagename: ensure => absent }
   }
 
